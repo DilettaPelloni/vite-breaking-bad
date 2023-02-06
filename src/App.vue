@@ -17,6 +17,6 @@
 </template>
 
 <style  lang="scss">
-	@import "./style/main";
+@import "./style/main.scss";
 
 </style>
