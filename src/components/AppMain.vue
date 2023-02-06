@@ -29,7 +29,7 @@ import {store} from '../store';
                     <div class="row row-cols-5 justify-content-between g-3">
                         <div class="col text-center"
                             v-for="card in store.cards">
-                            <div class="my-card h-100 bg-primary ">
+                            <div class="my-card h-100 px-2 bg-primary ">
                                 <img class="img-fluid" :src="card.card_images[0].image_url_small" :alt="card.name">
                                 <p class="my-3 text-light fw-bold">{{card.name}}</p>
                                 <p class="m-0">{{card.type}}</p>
