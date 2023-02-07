@@ -1,9 +1,13 @@
 <script>
+import MainCounter from './MainCounter.vue';
 import {store} from '../store';
 import axios from 'axios';
 
     export default {
         name:'AppMain',
+        components: {
+            MainCounter,
+        },//components
         data() {
             return {
                 store,
@@ -19,7 +23,18 @@ import axios from 'axios';
             },//getCards
             getArchetypes() {
                 axios.get('https://db.ygoprodeck.com/api/v7/archetypes.php').then((response) => {
-                    this.store.archetypes = response.data;
+                    const sortedArchetypes = response.data.sort((a, b) => {
+                        const nameA = a.archetype_name.toUpperCase();
+                        const nameB = b.archetype_name.toUpperCase();
+                        if (nameA < nameB) {
+                            return -1;
+                        }
+                        if (nameA > nameB) {
+                            return 1;
+                        }
+                        return 0;
+                    });
+                    this.store.archetypes = sortedArchetypes;
                 });
             },//getArchetypes
             filterCards() {
@@ -58,14 +73,11 @@ import axios from 'axios';
                     </select>
                 </section><!-- CHIUSURA SEZIONE SELECT -->
                 <section class="p-5 bg-light">
-                    <div class="row bg-dark text-light fw-bold ">
-                            <p class="m-0 py-2 ">Found {{store.cards.length}} cards</p>
-                    </div><!-- CHIUSURA ROW DI TESTA -->
+                    <MainCounter />
                     <div class="row row-cols-5 g-3">
-                        <div class="col text-center"
-                            v-for="card in store.cards">
+                        <div class="col text-center" v-for="card in store.cards">
                             <div class="my-card h-100 p-2 bg-primary ">
-                                <img class="img-fluid" src="https://via.placeholder.com/168x246" :alt="card.name">
+                                <img class="img-fluid" :src= "card.card_images[0].image_url_small" :alt="card.name">
                                 <p class="my-3 text-light fw-bold">{{card.name}}</p>
                                 <p class="m-0">{{card.type}}</p>
                             </div><!-- CHIUSURA CARD -->
