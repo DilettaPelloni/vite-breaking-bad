@@ -36,8 +36,9 @@ import axios from 'axios';
             <section class="my-content" v-if="store.loaded">
                 <section class="mb-4">
                     <select class="form-select w-25" name="filter" >
-                        <option value="Alien" selected>
-                            Alien
+                        <option value="" selected> Select an archetype</option>
+                        <option v-for="archetype in store.archetypes" :value="archetype.archetype_name">
+                            {{ archetype.archetype_name }}
                         </option>
                     </select>
                 </section><!-- CHIUSURA SEZIONE SELECT -->
