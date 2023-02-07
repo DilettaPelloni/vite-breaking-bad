@@ -1,5 +1,6 @@
 <script>
 import MainCounter from './MainCounter.vue';
+import MainCard from './MainCard.vue'
 import {store} from '../store';
 import axios from 'axios';
 
@@ -7,6 +8,7 @@ import axios from 'axios';
         name:'AppMain',
         components: {
             MainCounter,
+            MainCard,
         },//components
         data() {
             return {
@@ -76,23 +78,34 @@ import axios from 'axios';
                     <MainCounter />
                     <div class="row row-cols-5 g-3">
                         <div class="col text-center" v-for="card in store.cards">
-                            <div class="my-card h-100 p-2 bg-primary ">
-                                <img class="img-fluid" :src= "card.card_images[0].image_url_small" :alt="card.name">
-                                <p class="my-3 text-light fw-bold">{{card.name}}</p>
-                                <p class="m-0">{{card.type}}</p>
-                            </div><!-- CHIUSURA CARD -->
+                            <MainCard :card="card"/>
                         </div><!-- CHIUSURA COL CARD -->
                     </div><!-- CHIUSURA ROW CARDS -->
                 </section><!-- CHIUSURA SEZIONE CARD BOX -->
             </section><!-- CHIUSURA SEZIONE MY CONTENT -->
             
-            <section v-else class="loader py-5 bg-light d-flex justify-content-center align-items-center">
-                <h2 class="me-3 text-primary">
-                    LOADING...
-                </h2>
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
+            <section v-else class="loader">
+                <section class="mb-4 placeholder-glow">
+                    <select class="form-select w-25 placeholder"></select>
+                </section>
+                <section class="p-5 bg-light">
+                    <div class="row p-2 bg-dark text-light placeholder-glow">
+                        <p class="m-0 w-25 placeholder"></p>
+                    </div>
+                    <div class="row row-cols-5 g-3">
+                        <div class="col text-center " v-for="i in 15">
+                            <div class="my-card h-100 p-2 bg-primary placeholder-glow">
+                                <img class="img-fluid placeholder" src= "https://via.placeholder.com/168x246?text=" alt="placeholder">
+                                <p class="my-3 text-light placeholder-glow">
+                                    <span class="placeholder col-6">  </span>
+                                </p>
+                                <p class="m-0 placeholder-wave">
+                                    <span class="placeholder col-6"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>   
+                </section>
             </section><!-- CHIUSURA SEZIONE LOADER -->
 
         </div><!-- CHIUSURA CONTAINER -->
