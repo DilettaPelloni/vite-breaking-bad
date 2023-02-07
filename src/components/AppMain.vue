@@ -1,5 +1,7 @@
 <script>
 import {store} from '../store';
+import axios from 'axios';
+
     export default {
         name:'AppMain',
         data() {
@@ -7,6 +9,23 @@ import {store} from '../store';
                 store,
             };//return
         },//data
+        methods: {
+            getCards() {
+                axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php').then((response) => {
+                    this.store.cards = response.data.data.slice(0,50);
+                    this.store.loaded = true;
+                });
+            },//getCards
+            getArchetypes() {
+                axios.get('https://db.ygoprodeck.com/api/v7/archetypes.php').then((response) => {
+                    this.store.archetypes = response.data;
+                });
+            },//getArchetypes
+        },//methods
+        created() {
+            this.getCards();
+            this.getArchetypes();
+        },//created
     };//export
 </script>
 
@@ -16,7 +35,7 @@ import {store} from '../store';
 
             <section class="my-content" v-if="store.loaded">
                 <section class="mb-4">
-                    <select name="filter" >
+                    <select class="form-select w-25" name="filter" >
                         <option value="Alien" selected>
                             Alien
                         </option>
@@ -30,7 +49,7 @@ import {store} from '../store';
                         <div class="col text-center"
                             v-for="card in store.cards">
                             <div class="my-card h-100 px-2 bg-primary ">
-                                <img class="img-fluid" :src="card.card_images[0].image_url_small" :alt="card.name">
+                                <img class="img-fluid" src="https://via.placeholder.com/168x246" :alt="card.name">
                                 <p class="my-3 text-light fw-bold">{{card.name}}</p>
                                 <p class="m-0">{{card.type}}</p>
                             </div><!-- CHIUSURA CARD -->
